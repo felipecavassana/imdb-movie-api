@@ -1,0 +1,12 @@
+services:
+  imdb-movie-api:
+    build: .
+    image: imdb-movie-api:latest
+    container_name: imdb-movie-api
+    ports:
+      - "8080:8080"
+    environment:
+      # Defina sua chave da OMDb API no arquivo .env (veja .env.example)
+      # ou exporte OMDB_API_KEY no terminal antes de rodar docker-compose.
+      - OMDB_API_KEY=${OMDB_API_KEY}
+    restart: unless-stopped
