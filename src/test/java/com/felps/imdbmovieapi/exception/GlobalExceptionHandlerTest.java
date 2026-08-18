@@ -65,4 +65,15 @@ class GlobalExceptionHandlerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         assertThat(response.getBody().getMessage()).doesNotContain("stack trace sensivel");
     }
+
+    @Test
+    void handleMovieNotFound_shouldPopulateErrorAndPathAndTimestamp() {
+        ResponseEntity<ApiError> response =
+                handler.handleMovieNotFound(new MovieNotFoundException("xyz"), request);
+
+        ApiError body = response.getBody();
+        assertThat(body.getError()).isEqualTo("Not Found");
+        assertThat(body.getPath()).isEqualTo("/api/movies");
+        assertThat(body.getTimestamp()).isNotNull();
+    }
 }
